@@ -1,0 +1,25 @@
+{
+  "illustrator": [
+    "/Applications/{{ version }}/Presets.localized/en_US/Actions/",
+    "/Applications/{{ version }}/Presets.localized/en_US/Brushes/",
+    "/Applications/{{ version }}/Presets.localized/en_US/Charts/",
+    "/Applications/{{ version }}/Presets.localized/en_US/Graphic Styles/",
+    "/Applications/{{ version }}/Presets.localized/en_US/Keyboard Shortcuts/",
+    "/Applications/{{ version }}/Presets.localized/en_US/Save for Web Settings/",
+    "/Applications/{{ version }}/Presets.localized/en_US/Scripts/",
+    "/Applications/{{ version }}/Presets.localized/en_US/Swatches/",
+    "/Applications/{{ version }}/Presets.localized/en_US/Symbols/",
+    "/Applications/{{ version }}/Presets.localized/en_US/Workspaces/",
+    "/Applications/{{ version }}/Cool Extras.localized/en_US/Templates/",
+    "/Applications/{{ version }}/Support Files/New Document Profiles/"
+  ],
+  "photoshop": [
+    "/Applications/{{ version }}/Presets/Actions",
+    "/Applications/{{ version }}/Presets/Brushes",
+    "/Applications/{{ version }}/Presets/Color Swatches",
+    "/Applications/{{ version }}/Presets/Gradients",
+    "/Applications/{{ version }}/Presets/Patterns",
+    "/Applications/{{ version }}/Presets/Scripts",
+    "/Applications/{{ version }}/Presets/Styles"
+  ]
+}
