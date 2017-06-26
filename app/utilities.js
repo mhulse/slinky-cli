@@ -100,7 +100,9 @@ module.exports = {
 		del.sync([
 			`${dirPath}/**`,
 			`!${dirPath}`,
-		]);
+		], {
+			force: true,
+		});
 		
 	},
 	

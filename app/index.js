@@ -15,23 +15,23 @@ const OPTIONS = {};
 
 function makeSymlinks(version) {
 	
-	let parent = path.normalize(`${OPTIONS.dir}/${version}/`);
+	let parent = path.normalize(`${OPTIONS.dir}/${version}`);
 	
 	utilities.makeDir(parent)
 	
 	utilities.cleanDir(parent);
 	
-	// _(utilities.mappings[OPTIONS.app]).each(mapping => {
-	// 	
-	// 	let target = _.template(mapping)({
-	// 		version: version
-	// 	});
-	// 	
-	// 	let link = path.normalize(`${parent}/${utilities.getLastDir(target)}`);
-	// 	
-	// 	utilities.makeDirLink(target, link);
-	// 	
-	// });
+	_(utilities.mappings[OPTIONS.app]).each(mapping => {
+		
+		let target = _.template(mapping)({
+			version: version
+		});
+		
+		let link = path.normalize(`${parent}/${utilities.getLastDir(target)}`);
+		
+		utilities.makeDirLink(target, link);
+		
+	});
 	
 	
 }
