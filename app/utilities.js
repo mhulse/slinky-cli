@@ -1,136 +1,117 @@
 #!/usr/bin/env node
 // jshint esversion:6, laxbreak:true
 
-import _ from 'underscore';
-import colors from 'colors';
-import fs from 'fs-extra';
-import glob from 'glob';
 import path from 'path';
-import del from 'del';
-
-// http://underscorejs.org/#template
-_.templateSettings = {
-	// `<% … %>` becomes `{% … %}`
-	evaluate : /\{\%([\s\S]+?)\%\}/g,
-	// `<%= … %>` becomes `{{ … }}`
-	interpolate : /\{\{([\s\S]+?)\}\}/g
-};
+import fs from 'fs';
+import yaml from 'js-yaml';
+import untildify from 'untildify';
+import move from 'mv';
 
 module.exports = {
 	
-	mappings: require('./mappings.json'),
-	
-	getLastDir: function(dirPath) {
+	last: function(file) {
 		
-		return dirPath.match(/([^\/]*)\/*$/)[1];
+		let match = file.match(/([^\/]*)\/*$/)[1];
 		
-	},
-	
-	getDirVers: function(dirPath) {
-		
-		let dirs = glob.sync(dirPath, {
-			nocase: true,
-		});
-		
-		dirs = dirs.map(dir => {
-			return this.getLastDir(dir);
-		});
-		
-		return dirs.reverse();
+		if (match) {
+			
+			return match;
+			
+		} else {
+			
+			this.exit(`${file} could not be matched!`, 1);
+			
+		}
 		
 	},
 	
-	fileExists: function(filePath) {
+	fix: function(file) {
 		
 		try {
-			filePath = fs.realpathSync(filePath);
-			return fs.lstatSync(filePath).isFile();
+			
+			return fs.realpathSync(path.normalize(untildify(file)));
+			
 		} catch (error) {
-			return false;
+			
+			this.exit(`${file} can not be fixed!`, 1);
+			
 		}
+		
 		
 	},
 	
-	dirExists: function(dirPath, link = false) {
-		
-		let method = (link) ? 'isSymbolicLink' : 'isDirectory';
+	exists: function(file, symlink = false) {
 		
 		try {
-			return fs.lstatSync(dirPath)[method]();
+			
+			return (symlink) ? fs.lstatSync(file).isSymbolicLink() : fs.existsSync(file);
+			
 		} catch (error) {
-			return false;
+			
+			this.exit(`${file} does not exist!`, 1);
+			
 		}
 		
 	},
 	
-	dirLinkExists: function(dirPath) {
+	yaml: function(file) {
 		
 		try {
-			return fs.lstatSync(dirPath).isSymbolicLink();
-		} catch (error) {
-			return false;
-		}
-		
-	},
-	
-	makeDir: function(dirPath) {
-		
-		if ( ! this.dirExists(dirPath)) {
 			
-			fs.mkdirSync(dirPath);
+			return yaml.safeLoad(fs.readFileSync(file, 'utf8'));
+			
+		} catch(error) {
+			
+			this.exit(`${file} could not read yaml!`, 1);
 			
 		}
 		
 	},
 	
-	makeDirLink: function(target, link) {
+	move: function(from, to, callback) {
 		
-		if (this.dirExists(target) && ( ! this.dirExists(link, true))) {
+		move(from, to, {
+			mkdirp: true
+		}, function(error) {
 			
-			fs.symlinkSync(target, link);
-			
-		}
-		
-	},
-	
-	cleanDir: function(dirPath) {
-		
-		//console.log(dirPath);
-		
-		del.sync([
-			`${dirPath}/**`,
-			`!${dirPath}`,
-		], {
-			force: true,
+			if (error) {
+				
+				this.exit(`${from} could not be moved!`, 1);
+				
+			} else {
+				
+				callback();
+				
+			}
 		});
 		
 	},
 	
-	o: function(type, ... messages) {
+	link: function(target, link) {
 		
-		console[type].apply(this, messages);
+		if ( ! this.exists(link)) {
+			
+			let result = fs.symlinkSync(target, link);
+			
+			if (result === null) {
+				
+				console.log(`${link} could not create symlink!`);
+				
+			}
+			
+		} else {
+			
+			console.log(`${link} symlink already exists!`);
+			
+		}
 		
 	},
 	
-	title: function(string) {
+	exit: function(message, code = 0) {
 		
-		this.o('log');
-		this.o('log', ` ${string.toUpperCase()} `.bold.bgBlack.white);
-		this.o('log');
+		console.error(message);
 		
-	},
-	
-	done: function({
-		text = 'Done!',
-		before = true,
-		after = false,
-	} = {}) {
-		
-		if (before) this.o('log');
-		
-		this.o('log', text);
-		
-		if (after) this.o('log');
+		process.exit(code);
 		
 	},
 	
