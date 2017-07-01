@@ -25,7 +25,7 @@ Create a file named `config.yml`; the contents should look something like this:
 
 From the command line, run `knilmys -d=~/Desktop/destination`.
 
-For more information, run `knilmys -h`.
+For more information, run `knilmys -h` and check out [this repo’s Wiki](../../wiki).
 
 ## Installation
 
