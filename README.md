@@ -1,58 +1,39 @@
-# adobe-dirs-cli
+# knilmys-cli
 
-**Node.js command line interface (CLI) that creates easy-to-access symlinks, in a directory of your choosing, for commonly-used Adobe application installation directories.**
+**Reverse Symlink CLI**
 
-## Application-specific symlinks
+Move chosen files and/or directories, into a destination directory, and replace with symlinks pointing to the new location.
 
-Usage examples and lists of symlinked directories that adobe-dirs-cli will create:
+This is a macOS-specific tool; **USE AT YOUR OWN RISK!**
 
-### Illustrator
+Pull requests are welcomed.
 
-```bash
-$ adobe-dirs illustrator ~/dropbox/adobe-dirs/Adobe\ Illustrator/
+## Usage
+
+Create a file named `config.yml`; the contents should look something like this:
+
+```yaml
+~/Desktop/target/:
+- foo
+- foo.txt
+
+~/Desktop/target 2/:
+- baz
 ```
 
-* /Applications/Adobe Illustrator CC YYYY/Presets.localized/en_US/Actions
-* /Applications/Adobe Illustrator CC YYYY/Presets.localized/en_US/Brushes
-* /Applications/Adobe Illustrator CC YYYY/Presets.localized/en_US/Charts
-* /Applications/Adobe Illustrator CC YYYY/Presets.localized/en_US/Graphic Styles
-* /Applications/Adobe Illustrator CC YYYY/Presets.localized/en_US/Keyboard Shortcuts
-* /Applications/Adobe Illustrator CC YYYY/Presets.localized/en_US/Save for Web Settings
-* /Applications/Adobe Illustrator CC YYYY/Presets.localized/en_US/Scripts
-* /Applications/Adobe Illustrator CC YYYY/Presets.localized/en_US/Swatches
-* /Applications/Adobe Illustrator CC YYYY/Presets.localized/en_US/Symbols
-* /Applications/Adobe Illustrator CC YYYY/Presets.localized/en_US/Workspaces
-* /Applications/Adobe Illustrator CC YYYY/Cool Extras.localized/en_US/Templates
-* /Applications/Adobe Illustrator CC YYYY/Support Files/New Document Profiles
+… put this file in your desired destination directory.
 
-### Photoshop
+From the command line, run `knilmys -d=~/Desktop/destination`.
 
-Coming soon!
+For more information, run `knilmys -h`.
 
 ## Installation
 
-Install adobe-dirs-cli via npm:
-
-```bash
-# COMING SOON!
-# $ npm i adobe-dirs-cli -g
-```
-
-Or, install directly from it’s GitHub repo:
+Install directly from GitHub:
 
 ```bash
 $ npm i mhulse/adobe-dirs-cli -g
 ```
-
-## Usage
-
-Get help:
-
-```bash
-$ adobe-dirs -h
-```
-
-… More information coming soon.
 
 ---
 

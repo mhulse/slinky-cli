@@ -1,7 +1,7 @@
 {
-  "name": "adobe-dirs-cli",
+  "name": "knilmys-cli",
   "version": "0.1.0",
-  "description": "Node.js (CLI) that creates symlinks for Adobe applications.",
+  "description": "Reverse Symlink CLI",
   "author": "Michael Hulse",
   "license": "Apache 2.0",
   "scripts": {
@@ -10,10 +10,10 @@
   },
   "repository": {
     "type": "git",
-    "url": "https://github.com/mhulse/adobe-dirs-cli.git"
+    "url": "https://github.com/mhulse/knilmys-cli.git"
   },
   "bin": {
-    "adobe-dirs": "app/bridge.js"
+    "knilmys": "app/bridge.js"
   },
   "main": "app/bridge",
   "dependencies": {
@@ -22,12 +22,10 @@
     "babel-preset-es2016": "^6",
     "babel-preset-es2017": "^6",
     "babel-register": "^6",
-    "colors": "^1",
-    "del": "^3",
     "fs-extra": "^3",
-    "glob": "^7",
-    "inquirer": "^3",
-    "underscore": "^1",
+    "js-yaml": "^3",
+    "mv": "^2",
+    "untildify": "^3",
     "yargs": "^8"
   }
 }

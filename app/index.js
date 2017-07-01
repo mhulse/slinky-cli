@@ -1,89 +1,58 @@
 #!/usr/bin/env node
 // jshint esversion:6, -W030
 
-import _ from 'underscore';
-import colors from 'colors';
-import inquirer from 'inquirer';
-import path from 'path';
 import yargs from 'yargs';
-import fs from 'fs-extra';
 
 import pkg from '../package.json';
 import utilities from './utilities';
 
 const OPTIONS = {};
 
-function makeSymlinks(version) {
+function linkFile(from, to) {
 	
-	let parent = path.normalize(`${OPTIONS.dir}/${version}`);
+	console.log(from, to);
 	
-	utilities.makeDir(parent)
-	
-	utilities.cleanDir(parent);
-	
-	_(utilities.mappings[OPTIONS.app]).each(mapping => {
-		
-		let target = _.template(mapping)({
-			version: version
-		});
-		
-		let link = path.normalize(`${parent}/${utilities.getLastDir(target)}`);
-		
-		utilities.makeDirLink(target, link);
-		
-	});
-	
+	utilities.link(from, to);
 	
 }
 
-function checkVersion() {
+function moveFile(from) {
 	
-	let choices = utilities.getDirVers(`/Applications/*${OPTIONS.app}*`);
+	let to = `${OPTIONS.directory}/${utilities.last(from)}`;
 	
-	if (choices.length) {
+	utilities.move(from, to, function(error) {
 		
-		choices.push('Cancel');
-		
-		inquirer.prompt([
-			{
-				type: 'list',
-				name: 'choose',
-				message: 'Choose version',
-				choices: choices,
-			},
-		]).then((answers) => {
+		if ( ! error) {
 			
-			if (answers.choose.toLowerCase() != 'cancel') {
-				
-				makeSymlinks(answers.choose);
-				
-			}
+			linkFile(to, from);
 			
-		});
+		}
 		
-	}
+	});
 	
 }
 
 function startApp() {
 	
-	if (utilities.mappings[OPTIONS.app]) {
+	if (utilities.exists(OPTIONS.directory)) {
 		
-		if (utilities.dirExists(OPTIONS.dir)) {
+		let yaml = utilities.yaml(`${OPTIONS.directory}/${OPTIONS.config}`);
+		
+		for (let key in yaml) {
 			
-			utilities.title('Starting Adobe Dirs');
-			
-			checkVersion();
-			
-		} else {
-			
-			utilities.o('log', `Chosen directory does not exist: ${OPTIONS.dir.bold}`.red);
+			for (let item of yaml[key]) {
+				
+				let file = utilities.fix(`${key}/${item}`);
+				
+				if (utilities.exists(file) && ( ! utilities.exists(file, true))) {
+					
+					moveFile(file);
+					
+				}
+				
+			}
 			
 		}
-		
-	} else {
-		
-		utilities.o('log', `Chosen application does not exist: ${OPTIONS.app.bold}`.red);
 		
 	}
 	
@@ -93,18 +62,34 @@ function getOptions() {
 	
 	let argv = yargs
 		.version(pkg.version)
-		.command('adobe-dirs', 'Create symlinks for Adobe applications.')
-		.usage('$0 <application> <directory>')
+		.command('adobe-dirs', 'Reverse symlink creation CLI.')
+		.option('directory', {
+			alias: [
+				'd',
+			],
+			description: 'Directory where sylinked destinations will be copied.',
+			type: 'string',
+			demand: true,
+		})
+		.option('config', {
+			alias: [
+				'c'
+			],
+			description: 'Configuration file name and extension.',
+			type: 'string',
+			default: 'config.yml',
+		})
+		.usage('$0 --directory <directory>')
 		.example(
-			'$0 illustrator ~/dropbox/adobe/illustrator',
+			'$0 -d ~/dropbox/adobe/',
 			'Create symlinks for application in specified directory.'
 		)
 		.alias('h', 'help')
 		.help('h', 'Show help.')
 		.argv;
 	
-	OPTIONS.app = argv._[0].toLowerCase();
-	OPTIONS.dir = argv._[1];
+	OPTIONS.config = argv.config;
+	OPTIONS.directory = utilities.fix(argv.directory);
 	
 	startApp();
 	
