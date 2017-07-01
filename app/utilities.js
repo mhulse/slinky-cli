@@ -33,7 +33,6 @@ module.exports = {
 			
 		} catch (error) {
 			
-			console.log(error);
 			this.exit(`${file} can not be fixed!`, 1);
 			
 		}
