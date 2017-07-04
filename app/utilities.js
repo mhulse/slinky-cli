@@ -7,6 +7,8 @@ import yaml from 'js-yaml';
 import untildify from 'untildify';
 import move from 'mv';
 
+require('dotenv').config();
+
 module.exports = {
 	
 	last: function(file) {
@@ -19,7 +21,21 @@ module.exports = {
 			
 		} else {
 			
-			this.exit(`${file} could not be matched!`, 1);
+			this.exit(`File could not be matched! ${file}`, 1, error);
+			
+		}
+		
+	},
+	
+	delete: function(file) {
+		
+		try {
+			
+			fs.unlinkSync(file);
+			
+		} catch (error) {
+			
+			this.exit(`File can not be deleted! ${file}`, 1, error);
 			
 		}
 		
@@ -29,14 +45,20 @@ module.exports = {
 		
 		try {
 			
-			return fs.realpathSync(path.normalize(untildify(file)));
+			// Remove trialing slash:
+			file = file.replace(/[\\\/]+$/, '');
+			// Expand home directory tilde:
+			file = untildify(file);
+			// Normalize double slashes, etc.:
+			file = path.normalize(file);
+			
+			return file;
 			
 		} catch (error) {
 			
-			this.exit(`${file} can not be fixed!`, 1);
+			this.exit(`File can not be fixed! ${file}`, 1, error);
 			
 		}
-		
 		
 	},
 	
@@ -48,7 +70,7 @@ module.exports = {
 			
 		} catch (error) {
 			
-			this.exit(`${file} does not exist!`, 1);
+			this.exit(`File does not exist! ${file}`, 1, error);
 			
 		}
 		
@@ -62,7 +84,7 @@ module.exports = {
 			
 		} catch(error) {
 			
-			this.exit(`${file} could not read yaml!`, 1);
+			this.exit(`File could not be read as yaml! ${file}`, 1, error);
 			
 		}
 		
@@ -71,12 +93,12 @@ module.exports = {
 	move: function(from, to, callback) {
 		
 		move(from, to, {
-			mkdirp: true
-		}, function(error) {
+			mkdirp: false
+		}, error => {
 			
 			if (error) {
 				
-				this.exit(`${from} could not be moved!`, 1);
+				this.exit(`File could not be moved!\nFrom: ${from}\nTo: ${to}`, 1, error);
 				
 			} else {
 				
@@ -95,21 +117,23 @@ module.exports = {
 			
 			if (result === null) {
 				
-				console.log(`${link} could not create symlink!`);
+				console.log(`Could not create symlink!\nTarget: ${target}\nLink: ${link}`);
 				
 			}
 			
 		} else {
 			
-			console.log(`${link} symlink already exists!`);
+			console.log(`Symlink already exists! ${link}`);
 			
 		}
 		
 	},
 	
-	exit: function(message, code = 0) {
+	exit: function(message, code = 0, error = undefined) {
 		
 		console.error(message);
+		
+		(process.env.DEBUG && error) && console.error(error);
 		
 		process.exit(code);
 		

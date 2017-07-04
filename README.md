@@ -35,6 +35,12 @@ Install directly from GitHub:
 $ npm i mhulse/adobe-dirs-cli -g
 ```
 
+## Development notes
+
+For debug purposes, add a `.env` to the root of this project with text `DEBUG=true`.
+
+More information coming soon.
+
 ---
 
 Copyright © 2017 [Michael Hulse](http://mky.io).
