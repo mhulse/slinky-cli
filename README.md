@@ -57,9 +57,9 @@ Now symlinks on both machines are pointing to the same files and syncing between
 
 ## Development notes
 
-For debug purposes, add a `.env` to the root of this project with text `DEBUG=true`.
+Clone the repository and run `npm link` to create a globally-installed symbolic link to this package.
 
-More information coming soon.
+For debug purposes, add a `.env` to the root of this project with text `DEBUG=true`.
 
 ---
 
