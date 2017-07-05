@@ -12,6 +12,14 @@ This is a macOS-specific tool; **USE AT YOUR OWN RISK!**
 
 Pull requests are welcomed.
 
+## Installation
+
+Install directly from GitHub:
+
+```bash
+$ npm i mhulse/adobe-dirs-cli -g
+```
+
 ## Usage
 
 Create a file named `config.yml`; the contents should look something like this:
@@ -46,14 +54,6 @@ Until I can add logic to account for this scenario, my current workaround is:
 1. Revert the name of the first destination directory.
 
 Now symlinks on both machines are pointing to the same files and syncing between computers via DropBox.
-
-## Installation
-
-Install directly from GitHub:
-
-```bash
-$ npm i mhulse/adobe-dirs-cli -g
-```
 
 ## Development notes
 
