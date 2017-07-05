@@ -6,6 +6,7 @@ import fs from 'fs';
 import yaml from 'js-yaml';
 import untildify from 'untildify';
 import move from 'mv';
+import { execSync as exec } from 'child_process';
 
 require('dotenv').config();
 
@@ -106,6 +107,22 @@ module.exports = {
 				
 			}
 		});
+		
+	},
+	
+	zip: function(file) {
+		
+		let zip = `${file}.zip`;
+		
+		try {
+			
+			exec(`rm -f "${zip}" && zip -r -X "${zip}" "${file}"`);
+			
+		} catch(error) {
+			
+			this.exit(`File could not be zipped! ${file}`, 1, error);
+			
+		}
 		
 	},
 	

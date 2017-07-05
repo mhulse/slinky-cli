@@ -49,6 +49,26 @@ function moveFile(from) {
 	
 }
 
+function zipFile(file) {
+	
+	if (OPTIONS.zip) {
+		
+		if (
+			(utilities.exists(file)) // Does the source file exist?
+			&&
+			( ! utilities.exists(file, true)) // Is the source file not a symlink?
+		) {
+			
+			utilities.zip(file);
+			
+		}
+		
+	}
+	
+	moveFile(file);
+	
+}
+
 function startApp() {
 	
 	if (utilities.exists(OPTIONS.directory)) {
@@ -63,7 +83,7 @@ function startApp() {
 				
 				if (utilities.exists(file)) {
 					
-					moveFile(file);
+					zipFile(file);
 					
 				}
 				
@@ -80,6 +100,9 @@ function getOptions() {
 	let argv = yargs
 		.version(pkg.version)
 		.command('adobe-dirs', 'Reverse symlink creation CLI.')
+		.boolean([
+			'zip',
+		])
 		.option('config', {
 			alias: [
 				'c'
@@ -96,6 +119,14 @@ function getOptions() {
 			type: 'string',
 			demand: true,
 		})
+		.option('zip', {
+			alias: [
+				'z'
+			],
+			description: 'Set to false to disable zipping of source file(s).',
+			type: 'boolean',
+			default: true,
+		})
 		.usage('$0 --directory <directory>')
 		.example(
 			'$0 -d ~/dropbox/adobe/',
@@ -107,6 +138,7 @@ function getOptions() {
 	
 	OPTIONS.config = argv.config;
 	OPTIONS.directory = utilities.fix(argv.directory);
+	OPTIONS.zip = argv.zip;
 	
 	startApp();
 	
