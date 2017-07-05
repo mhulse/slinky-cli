@@ -1,7 +1,5 @@
 # slinky-cli
 
-![](slinky.gif)
-
 **Reverse Symlink CLI**
 
 Move chosen files and/or directories, into a destination directory, and replace them with symlinks pointing to their new location.
@@ -41,7 +39,9 @@ From the command line, run `slinky -d=~/Desktop/destination`.
 
 For more information, run `slinky -h` and check out [this repo’s Wiki](../../wiki).
 
-## Syncing between computers
+## About
+
+![](slinky.gif)
 
 I wrote this CLI so I could move all Adobe Illustrator/Photoshop files into a centralized location for consolidation purposes and easy modification (if interested, [check the wiki for example Adobe configurations](../../wiki/Configs-for-Adobe-Applications)).
 
