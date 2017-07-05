@@ -1,4 +1,4 @@
-# knilmys-cli
+# slinky-cli
 
 **Reverse Symlink CLI**
 
@@ -27,9 +27,9 @@ Create a file named `config.yml`; the contents should look something like this:
 
 … put this file in your desired destination directory.
 
-From the command line, run `knilmys -d=~/Desktop/destination`.
+From the command line, run `slinky -d=~/Desktop/destination`.
 
-For more information, run `knilmys -h` and check out [this repo’s Wiki](../../wiki).
+For more information, run `slinky -h` and check out [this repo’s Wiki](../../wiki).
 
 ## Syncing between computers
 

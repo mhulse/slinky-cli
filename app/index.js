@@ -99,7 +99,7 @@ function getOptions() {
 	
 	let argv = yargs
 		.version(pkg.version)
-		.command('adobe-dirs', 'Reverse symlink creation CLI.')
+		.command('slinky', 'Reverse symlink creation CLI.')
 		.boolean([
 			'zip',
 		])

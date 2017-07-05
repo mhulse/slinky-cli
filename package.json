@@ -1,5 +1,5 @@
 {
-  "name": "knilmys-cli",
+  "name": "slinky-cli",
   "version": "0.1.0",
   "description": "Reverse Symlink CLI",
   "author": "Michael Hulse",
@@ -10,10 +10,10 @@
   },
   "repository": {
     "type": "git",
-    "url": "https://github.com/mhulse/knilmys-cli.git"
+    "url": "https://github.com/mhulse/slinky-cli.git"
   },
   "bin": {
-    "knilmys": "app/bridge.js"
+    "slinky": "app/bridge.js"
   },
   "main": "app/bridge",
   "dependencies": {
