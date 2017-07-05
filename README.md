@@ -33,15 +33,11 @@ For more information, run `knilmys -h` and check out [this repo’s Wiki](../../
 
 ## Syncing between computers
 
-I wrote this CLI so I could move all Adobe Illustrator/Photoshop files into a centralized location for consolidation purposes and easy modification.
+I wrote this CLI so I could move all Adobe Illustrator/Photoshop files into a centralized location for consolidation purposes and easy modification (if interested, [check the wiki for example Adobe configurations](../../wiki/Configs-for-Adobe-Applications)).
 
-If interested, check the wiki for example Adobe configs:
+Setting this up for a single computer is no prob … **Getting another computer in sync is problematic** because the symlinks, located deep within the Adobe Application directories, do not yet exist on the secondary computer.
 
-[Configs for Adobe Applications](../../wiki/Configs-for-Adobe-Applications)
-
-Setting this up for a single computer is no prob … **Getting another computer in sync is problematic** because the symlinks (located deep within the Adobe Application directories) do not yet exist on the secondary computer’s “target” directories. **My script does not account for this scenario!**
-
-Until I can add this logic to the CLI’s codebase, my current workaround is:
+Until I can add logic to account for this scenario, my current workaround is:
 
 1. On the first computer, with the “destination” directory in DropBox, run this script.
 1. On the secondary machine, temporarily rename the existing “destination” directory and recreate it with only the configuration file inside.
@@ -49,9 +45,7 @@ Until I can add this logic to the CLI’s codebase, my current workaround is:
 1. Rename the new destination directory something unique (or back it up, or remove it).
 1. Revert the name of the first destination directory.
 
-Done!
-
-Now symlinks on both machines are pointing at DropBox and syncing between computers.
+Now symlinks on both machines are pointing to the same files and syncing between computers via DropBox.
 
 ## Installation
 
