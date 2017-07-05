@@ -1,10 +1,12 @@
 # slinky-cli
 
+![](slinky.gif)
+
 **Reverse Symlink CLI**
 
-Move chosen files and/or directories, into a destination directory, and replace with symlinks pointing to the new location.
+Move chosen files and/or directories, into a destination directory, and replace them with symlinks pointing to their new location.
 
-The linking gets reversed if symlinks are detected in the source location.
+The process gets reversed if symlinks are detected in the “source” location. This allows you to restore the chosen files back to their original locations.
 
 Chosen files are zipped for archival purposes.
 
