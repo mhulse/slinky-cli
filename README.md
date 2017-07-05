@@ -4,6 +4,10 @@
 
 Move chosen files and/or directories, into a destination directory, and replace with symlinks pointing to the new location.
 
+The linking gets reversed if symlinks are detected in the source location.
+
+Chosen files are zipped for archival purposes.
+
 This is a macOS-specific tool; **USE AT YOUR OWN RISK!**
 
 Pull requests are welcomed.
