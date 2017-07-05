@@ -39,7 +39,9 @@ If interested, check the wiki for example Adobe configs:
 
 [Configs for Adobe Applications](../../wiki/Configs-for-Adobe-Applications)
 
-Setting this up for a single computer is no prob … **Getting another computer in sync is problematic** because the symlinks (located deep within the Adobe Application directories) do not yet exist on the secondary computer’s “target” directory (i.e. DropBox). Until I can account for this scenario via the CLI’s codebase, my current workaround is:
+Setting this up for a single computer is no prob … **Getting another computer in sync is problematic** because the symlinks (located deep within the Adobe Application directories) do not yet exist on the secondary computer’s “target” directories. **My script does not account for this scenario!**
+
+Until I can add this logic to the CLI’s codebase, my current workaround is:
 
 1. On the first computer, with the “destination” directory in DropBox, run this script.
 1. On the secondary machine, temporarily rename the existing “destination” directory and recreate it with only the configuration file inside.
@@ -47,7 +49,9 @@ Setting this up for a single computer is no prob … **Getting another computer 
 1. Rename the new destination directory something unique (or back it up, or remove it).
 1. Revert the name of the first destination directory.
 
-That should do it! Now symlinks on both machines are pointing at DropBox and syncing between computers.
+Done!
+
+Now symlinks on both machines are pointing at DropBox and syncing between computers.
 
 ## Installation
 
